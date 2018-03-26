@@ -1,12 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
+let mongoose = require('mongoose');
+let Retailer = require('../model/retailer');
+
 router.get("/", function(request, response) {
-  response.json({name: "Wall Mart"});
+  let query = Retailer.find({});
+  query.exec((err, retailers) => {
+    if (err) response.send(err);
+    response.json(retailers);
+  });
 });
 
 router.post("/", function(request, response) {
-  response.send("a POST request? nice");
+  var newRetailer = new Retailer(request.body);
+
+  newRetailer.save((err,retailer) => {
+    if (err) response.send(err);
+    response.json({message: "Retailer sucessfully added!", retailer });
+  });
 });
 
 router.put("/", function(request, response) {
