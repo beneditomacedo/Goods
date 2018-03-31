@@ -1,9 +1,9 @@
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // Retailer schema definition
 
-let RetailerSchema = new Schema(
+const RetailerSchema = new Schema(
   {
     name: { type: String, required: true},
     createdAt: { type: Date, default: Date.now},
@@ -17,11 +17,11 @@ let RetailerSchema = new Schema(
 
 RetailerSchema.pre('save', next => {
   now = new Date();
-  if(!this.createdat) {
+  if(!this.createdAt) {
     this.createdAt = now;
   }
   next();
 });
 
 // Exports the RetailerSchema for use elsewhere
-module.exports = mongoose.model('retailer', RetailerSchema);
+module.exports = mongoose.model('Retailer', RetailerSchema);
